@@ -1,26 +1,47 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import logo from "./logo.svg";
+import "./App.css";
 
 function App() {
+  // tom state - what our current state is 
+  // set tom state - what we want our state to be 
+
+  const [tomState, setTomState] = React.useState({
+    age: 0, 
+    light: 0,
+    hunger: 0,
+  })
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className="egg"></div>
+      <Screen />
+
+      <Button id="feedButton" onClick={()=>{
+        setTomState({
+          ...tomState,
+          hunger: tomState.hunger - 1,
+        })
+        alert(tomState.age)
+      }}/>
     </div>
   );
 }
+
+function Screen() {
+  return <div className="screen">Screen</div>;
+}
+// Every component takes an object to access properties
+function Button({ onClick }) {
+  return (
+    <button
+      onClick={() => {
+        console.log('Clicking button:', )
+        onClick()
+      }}
+    >Feed</button>
+  );
+}
+
 
 export default App;
