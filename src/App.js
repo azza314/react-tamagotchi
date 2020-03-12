@@ -6,7 +6,6 @@ function App() {
     <div className="App">
       <Egg />
       <Screen />
-      {/* <BtmBtns /> */}
       <Pet />
     </div>
   );
@@ -32,8 +31,16 @@ function sleep(currentState, setState){
 function feed(currentState, setState){
   setState({
     ...currentState, 
-    hungerLevel: currentState.hungerLevel += 1
+    hungerLevel: currentState.hungerLevel + 1
   })
+}
+
+function play(currentState, setState){
+  setState({
+    ...currentState, 
+    play: currentState.play + 1
+  })
+  alert(currentState.play)
 }
 
 function Egg(){
@@ -52,21 +59,14 @@ function Pet(){
     <div className="pet"></div>
   )
 }
-// function BtmBtns(){
-//   return(
-//     <div className="btmBtns">
-//       <button className="left"></button>
-//       <button className="select"></button>
-//       <button className="right"></button>
-//     </div>
-//   )
-// }
+
 
 function Screen() {
   const [currentState, setState] = React.useState({
     hungerLevel: 0, 
     brLevel: 0, 
-    sleep: 0
+    sleep: 0, 
+    play: 0,
   });
   // What renders on the Screen 
   return (
@@ -104,11 +104,34 @@ function Screen() {
         </SleepButton>
       </div>
 
-      <div className="screenItem"></div>
-      <div className="screenItem"></div>
+      <div className="screenItem">
+        <h1>Pet Here</h1>
+      </div>
+
+      <div className="screenItem">
+        <GameButton
+          play = {
+            (e) => {
+              play(currentState, setState)
+            }
+          }
+        >
+          
+        </GameButton>
+      </div>
     </div>
   
   );
+}
+
+function GameButton({play}){
+  return(
+    <button className="fnBtn" onClick={()=>{
+      play();
+    }}>
+      <i class="fa fa-trophy" aria-hidden="true"></i>
+    </button>
+  )
 }
 
 function SleepButton({ sleep } ){
