@@ -1,3 +1,7 @@
+p{
+  font-size: 10px;
+  text-align: center;
+}
 .App{
   margin-top: 1em;
   display:grid;
@@ -34,7 +38,9 @@
 }
 
 .pet{
-  width:100px; height:100px; background-color: lightpink;
+  width:31.5vw; 
+  height:40vh; 
+  background-color: darkgrey;
 }
 
 .egg{
@@ -66,3 +72,27 @@ i{
   /* position: relative; */
   vertical-align: middle;
 }
+
+i.petIcon{
+  text-align: center;
+  width: 100%;
+  font-size: 2em;
+  margin-top: .25em;
+}
+/* .red{
+  animation-name: moves;
+  animation-timing-function: 'easy-in-out';
+  animation-duration: 0.6s;
+  animation-delay: 0.0s;
+  animation-iteration-count: 'infinite';
+  animation-direction: 'normal';
+  animation-fill-mode: 'forward';
+} */
+
+/* @keyframes moves {
+  0%   {background-color:red; left:0px; top:0px;}
+  25%  {background-color:yellow; left:200px; top:0px;}
+  50%  {background-color:blue; left:200px; top:200px;}
+  75%  {background-color:green; left:0px; top:200px;}
+  100% {background-color:red; left:0px; top:0px;}
+} */

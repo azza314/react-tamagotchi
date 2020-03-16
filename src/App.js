@@ -6,7 +6,6 @@ function App() {
     <div className="App">
       <Egg />
       <Screen />
-      <Pet />
     </div>
   );
 }
@@ -15,9 +14,8 @@ function App() {
 function onClickBR(currentState, setState){
   setState({
     ...currentState,
-    brLevel: currentState.brLevel + 1
+    bathroom: currentState.bathroom + 1
   })
-  alert(currentState.brLevel)
 }
 
 function sleep(currentState, setState){
@@ -25,13 +23,12 @@ function sleep(currentState, setState){
     ...currentState, 
     sleep: currentState.sleep + 1
   })
-  alert(currentState.sleep)
 }
 
 function feed(currentState, setState){
   setState({
     ...currentState, 
-    hungerLevel: currentState.hungerLevel + 1
+    hunger: currentState.hunger + 1
   })
 }
 
@@ -40,7 +37,20 @@ function play(currentState, setState){
     ...currentState, 
     play: currentState.play + 1
   })
-  alert(currentState.play)
+}
+
+function weight(currentState, setState){
+  setState({
+    ...currentState, 
+    weight: currentState.weight + 1
+  })
+}
+
+function health(currentState, setState){
+  setState({
+    ...currentState, 
+    health: currentState.health + 1
+  })
 }
 
 function Egg(){
@@ -54,19 +64,68 @@ function Egg(){
     </div>
   )
 }
-function Pet(){
-  return(
-    <div className="pet"></div>
-  )
-}
 
+function Pet(petState){
+  // console.log("petState", petState)
+
+  // const styleSheet = document.styleSheets[0];
+
+  // let keyframes =
+  // `@keyframes moves {
+    
+  //   0%   {background-color:red; left:0px; top:0px;}
+  //   25%  {background-color:yellow; left:200px; top:0px;}
+  //   50%  {background-color:blue; left:200px; top:200px;}
+  //   75%  {background-color:green; left:0px; top:200px;}
+  //   100% {background-color:red; left:0px; top:0px;}
+  // }`;
+
+  // styleSheet.insertRule(keyframes, styleSheet.cssRules.length);
+
+  // const style = {
+  //   animationName: 'moves',
+  //   animationTimingFunction: 'ease-in-out',
+  //   animationDuration: '0.6s',
+  //   animationDelay: '0.0s',
+  //   animationIterationCount: 'pulse 5s infinite;',
+  //   animationDirection: 'normal',
+  //   animationFillMode: 'forwards'
+  // };
+
+  let moodFace = null;
+  if(petState.mood >= 70) {
+      moodFace = "fa fa-smile-o";
+  } else if (petState.mood >= 40) {
+      moodFace = "fa fa-meh-o";
+  } else {
+    moodFace = "fa fa-frown-o"
+  }
+
+  return(
+    <div className="pet" >
+      <i className={`${moodFace} ${"petIcon"}`} aria-hidden="true"></i>
+      <p>Mood: {petState.mood}</p>
+      <p> Hunger: {petState.hunger} </p> 
+      <p> Bathroom: {petState.bathroom} </p> 
+      <p>Sleep:{petState.sleep} </p> 
+      <p>Play:{petState.play} </p>
+      <p>Weight:{petState.weight} </p>
+      <p>Health:{petState.health} </p>
+    </div>
+  )
+ 
+
+}
 
 function Screen() {
   const [currentState, setState] = React.useState({
-    hungerLevel: 0, 
-    brLevel: 0, 
-    sleep: 0, 
-    play: 0,
+    hunger: 100, 
+    bathroom: 100, 
+    sleep: 100, 
+    play: 100,
+    weight: 100,
+    health: 100,
+    mood: 100,
   });
   // What renders on the Screen 
   return (
@@ -76,10 +135,9 @@ function Screen() {
           onClick={e => {
             // setState({
             //   ...currentState,
-            //   hungerLevel: currentState.hungerLevel + 1
+            //   hunger: currentState.hunger + 1
             // });
             feed(currentState, setState)
-            alert(currentState.hungerLevel);
           }}
         >
           Feed
@@ -105,7 +163,7 @@ function Screen() {
       </div>
 
       <div className="screenItem">
-        <h1>Pet Here</h1>
+        {/* <h1>Pet Here</h1> */}
       </div>
 
       <div className="screenItem">
@@ -116,12 +174,54 @@ function Screen() {
             }
           }
         >
-          
         </GameButton>
+
+        <WeightButton
+          weight = {
+            (e) => {
+              weight(currentState, setState)
+          }
+        }
+        >
+        </WeightButton>
+
+        <HealthButton health = {
+            (e) => 
+            health(currentState, setState)
+          }>
+        </HealthButton>
       </div>
+      <Pet 
+        mood = {currentState.mood} 
+        hunger = {currentState.hunger}
+        bathroom= {currentState.bathroom} 
+        sleep= {currentState.sleep} 
+        play= {currentState.play}
+        weight= {currentState.weight}
+        health= {currentState.health}
+      />
     </div>
-  
   );
+}
+
+function HealthButton({ health }){
+  return(
+    <button className="fnBtn" onClick={ ()=>{
+      health()
+    }}>
+      <i className="fa fa-heartbeat" aria-hidden="true"></i>
+    </button>
+  )
+}
+
+function WeightButton({weight}){
+  return(
+    <button className="fnBtn" onClick={ ()=>{
+      weight()
+    }}>
+      <i className="fa fa-balance-scale" aria-hidden="true"></i>
+      </button>
+  )
 }
 
 function GameButton({play}){
@@ -129,14 +229,14 @@ function GameButton({play}){
     <button className="fnBtn" onClick={()=>{
       play();
     }}>
-      <i class="fa fa-trophy" aria-hidden="true"></i>
+      <i className="fa fa-trophy" aria-hidden="true"></i>
     </button>
   )
 }
 
 function SleepButton({ sleep } ){
   return(
-    <button className="fnBtn" onClick={()=>{
+    <button className="fnBtn" onClick={ ()=>{
       sleep();
     }}>
       <i className="fa fa-sun-o" aria-hidden="true"></i>
@@ -149,7 +249,7 @@ function SleepButton({ sleep } ){
 function FeedButton({ onClick }) {
   return (
     <button className="fnBtn"
-      onClick={() => {
+      onClick={ () => {
         onClick();
       }}
     >
@@ -161,7 +261,7 @@ function FeedButton({ onClick }) {
 function BathroomButton({customOnClick}) {
   return (
     <button className="fnBtn"
-      onClick={()=>{
+      onClick={ ()=>{
         customOnClick();
       }} 
     >
